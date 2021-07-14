@@ -21,30 +21,23 @@ public class AccessLevelController {
     @Autowired
     private AccessLevelService accessLevelService;
 
-    @GetMapping
+    @GetMapping()
     public ResponseEntity<List<AccessLevelDTO>> get(){
         return ResponseEntity.ok(accessLevelService.getAccessLevel());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity getById(@PathVariable("id") Long id){
-        Optional<AccessLevelDTO> accessLevel= accessLevelService.getAccessLevelById(id);
-        if(accessLevel.isPresent()){
-            return ResponseEntity.ok(accessLevel.get());
-        }else{
-            return ResponseEntity.notFound().build();
-        }
+       AccessLevelDTO accessLevel = accessLevelService.getAccessLevelById(id);
+       return ResponseEntity.ok(accessLevel);
     }
 
     @PostMapping
     public ResponseEntity post(@RequestBody AccessLevel accessLevel){
-        try {
+
             AccessLevelDTO al = accessLevelService.insert(accessLevel);
             URI location = getUri(al.getId());
             return ResponseEntity.created(null).build();
-        }catch (Exception ex){
-            return ResponseEntity.badRequest().build();
-        }
     }
 
     private URI getUri(Long id){
@@ -62,10 +55,9 @@ public class AccessLevelController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity delete(@PathVariable("id")Long id){
-        boolean ok = accessLevelService.delete(id);
+        accessLevelService.delete(id);
+        return ResponseEntity.ok().build();
 
-        return ok ? ResponseEntity.ok().build() :
-                    ResponseEntity.notFound().build();
     }
 
 }

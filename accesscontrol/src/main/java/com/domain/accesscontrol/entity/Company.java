@@ -1,6 +1,5 @@
 package com.domain.accesscontrol.entity;
 
-import com.domain.accesscontrol.enuns.States;
 import lombok.*;
 
 import javax.persistence.*;
@@ -27,7 +26,7 @@ public class Company {
     @Column(length = 12)
     private String city;
     @Column(length = 10)
-    private States states;
+    private String states;
     @Column(length = 10)
     private String telephone;
 }

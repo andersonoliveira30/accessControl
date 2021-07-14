@@ -2,6 +2,7 @@ package com.domain.accesscontrol.service;
 
 import com.domain.accesscontrol.dto.AccessLevelDTO;
 import com.domain.accesscontrol.entity.AccessLevel;
+import com.domain.accesscontrol.exception.ObjectNotFoundException;
 import com.domain.accesscontrol.repository.AccessLevelRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,8 +25,9 @@ public class AccessLevelService {
         return accessLevelRepository.findAll().stream().map(AccessLevelDTO::new).collect(Collectors.toList());
     }
 
-    public Optional<AccessLevelDTO> getAccessLevelById(Long id) {
-        return accessLevelRepository.findById(id).map(AccessLevelDTO::new);
+    public AccessLevelDTO getAccessLevelById(Long id) {
+        Optional<AccessLevel> accessLevel = accessLevelRepository.findById(id);
+        return accessLevel.map(AccessLevelDTO::new).orElseThrow(() -> new ObjectNotFoundException("Registro não foi encontrado!"));
     }
 
     public AccessLevelDTO insert(AccessLevel accessLevel) {
@@ -50,12 +52,9 @@ public class AccessLevelService {
         }
     }
 
-    public boolean delete(Long id) {
+    public void delete(Long id) {
 
-        if(getAccessLevelById(id).isPresent()){
-            accessLevelRepository.deleteAllById(id);
-            return true;
-        }
-        return false;
+        accessLevelRepository.deleteById(id);
+
     }
 }

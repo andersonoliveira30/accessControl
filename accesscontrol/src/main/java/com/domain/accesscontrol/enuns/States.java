@@ -1,4 +1,4 @@
-package com.domain.accesscontrol.enuns;
+/*package com.domain.accesscontrol.enuns;
 
 public enum States {
 
@@ -51,3 +51,4 @@ public enum States {
         return codigoId;
     }
 }
+*/
