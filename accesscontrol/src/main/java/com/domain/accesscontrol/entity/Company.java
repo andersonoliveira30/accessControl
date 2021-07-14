@@ -25,6 +25,7 @@ public class Company {
     private String district;
     @Column(length = 12)
     private String city;
+    // Quando for adicionado o front usar o enum states
     @Column(length = 10)
     private String states;
     @Column(length = 10)
